@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 final MethodChannel _channel = MethodChannel(
@@ -16,7 +15,7 @@ const EventChannel _eventChannel =
     EventChannel('miguelruivo.flutter.plugins.filepickerevent');
 
 /// An implementation of [FilePicker] that uses method channels.
-class FilePickerIO extends FilePicker {   
+class FilePickerIO extends FilePicker {
   static const String _tag = 'MethodChannelFilePicker';
   static StreamSubscription? _eventSubscription;
 
@@ -33,6 +32,7 @@ class FilePickerIO extends FilePicker {
     bool? withReadStream = false,
     bool lockParentWindow = false,
     int selectionLimit = 0,
+    bool readSequential = false,
   }) =>
       _getPath(
         type,
@@ -76,7 +76,7 @@ class FilePickerIO extends FilePicker {
     bool? withReadStream,
     int selectionLimit,
   ) async {
-    final String type = describeEnum(fileType);
+    final String type = fileType.name;
     if (type != 'custom' && (allowedExtensions?.isNotEmpty ?? false)) {
       throw Exception(
           'You are setting a type [$fileType]. Custom extension filters are only allowed with FileType.custom, please change it or remove filters.');

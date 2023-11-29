@@ -15,6 +15,7 @@ class FilePickerMacOS extends FilePicker {
     bool withReadStream = false,
     bool lockParentWindow = false,
     int selectionLimit = 0,
+    bool readSequential = false,
   }) async {
     final String executable = await isExecutableOnPath('osascript');
     final String fileFilter = fileTypeToFileFilter(
